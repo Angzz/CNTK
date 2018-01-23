@@ -18,22 +18,22 @@ def _create_convolution_model():
         # The first two layers has bias=False to test, the conversion
         # work with and without bias in the Convolution.
         h = C.layers.Convolution2D(filter_shape=(5,5),
-                                           num_filters=8,
+                                           num_filters=64,
                                            strides=(2,2),
                                            pad=True, bias=False, name='first_convo')(h)
         
         h = C.layers.Convolution2D(filter_shape=(5,5),
-                                           num_filters=16,
+                                           num_filters=64,
                                            strides=(2,2),
                                            pad=True, bias=False, name='second_convo')(h)
 
         h = C.layers.Convolution2D(filter_shape=(5,5),
-                                           num_filters=16,
+                                           num_filters=64,
                                            strides=(1,1),
                                            pad=True, name='thrid_convo')(h)
 
         h = C.layers.Convolution2D(filter_shape=(5,5),
-                                           num_filters=16,
+                                           num_filters=64,
                                            strides=(1,1),
                                            pad=True, name='fourth_convo')(h)
         
@@ -89,5 +89,6 @@ def test_native_convolution(tmpdir):
     assert(len(functions) == 3)
     
     img_data = np.reshape(dat, (1, 1, 28, 28))
+
     res = native_binz.eval(img_data, device=eval_device)
     assert(len(res) > 0) # evaluation should work with the new model.

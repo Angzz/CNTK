@@ -1,13 +1,17 @@
 import cntk as C
+import os
 from cntk.contrib.netopt.custom_convolution_ops import *
 
 # Register the native binary convolution function that calls halide
 # operations internally.
-C.ops.register_native_user_function(
+try:
+    C.ops.register_native_user_function(
                 'NativeBinaryConvolveFunction', 
-                'Cntk.BinaryConvolutionExample-' + C.__version__.rstrip('+'), 
+                'Cntk.BinaryConvolution-' + C.__version__.rstrip('+'), 
                 'CreateBinaryConvolveFunction')
-
+except:
+    print("Could not find %s library. Please build %s and try again" % ('Cntk.BinaryConvolution-' + C.__version__.rstrip('+'), "Extnsibiliy\BinaryConvolution"))
+    os._exit(1)
 
 def binarize_convolution(model, train_function, filter_function = None):
     '''

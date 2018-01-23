@@ -18,7 +18,7 @@ sys.path.append(os.path.join(abs_path, "..", "..", "..", "..", "Examples", "Exte
 from prepare_test_data import prepare_CIFAR10_data
 from binary_convnet import *
 
-TOLERANCE_ABSOLUTE = 1e-1
+TOLERANCE_ABSOLUTE = 4e-1
 
 def test_binary_convnet_error(device_id):
     if cntk_device(device_id).type() != DeviceKind_GPU:
