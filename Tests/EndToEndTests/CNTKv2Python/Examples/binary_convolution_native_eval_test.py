@@ -20,10 +20,15 @@ from custom_convolution_ops import *
 # checks the functionality of the binary convolution custom function
 def test_native_binary_function():
     # user functions need to be registered before being callable by python
-    C.ops.register_native_user_function(
-                'NativeBinaryConvolveFunction', 
-                'Cntk.BinaryConvolution-' + C.__version__.rstrip('+'), 
-                'CreateBinaryConvolveFunction')
+    
+    try:
+        C.ops.register_native_user_function(
+                    'NativeBinaryConvolveFunction', 
+                    'Cntk.BinaryConvolution-' + C.__version__.rstrip('+'), 
+                    'CreateBinaryConvolveFunction')
+    except:
+        pytest.skip('Could not find {0} library. Please check if HALIDE_PATH is configured properly and try again'.format('Cntk.BinaryConvolution-' + C.__version__.rstrip('+'), 'Extnsibiliy\BinaryConvolution'))
+       
 
     # be sure to only run on CPU, binary convolution does not have GPU support for now
     dev = C.cpu()
